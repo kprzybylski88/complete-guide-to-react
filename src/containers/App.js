@@ -4,13 +4,29 @@ import Cockpit from '../components/Cockpit/Cockpit'
 import classes from './App.module.css';
 
 class App extends Component {
+  
+  constructor(props) {
+    super(props);
+    console.log('[App.js] constructor');
+    // older apps initialize state here
+  }
+
+  componentDidMount() {
+    console.log('[App.js] componentDidMount');
+  }
+
+  static getDerivedStateFromProps(props, state) {
+    console.log('[App.js] getDerivedStatFromProps', props);
+    return state;
+  }
+
   state = {
     people: [
       { name: 'KMP', age: 31 },
       { name: 'Jane', age: 23 },
       { name: 'Niji', age: 30 },
     ],
-    showPeople: false,
+    showPeople: true,
   }
   togglePeople = () => {
     const doesShow = this.state.showPeople;
@@ -34,6 +50,7 @@ class App extends Component {
   }
 
   render() {
+    console.log('[App.js] render')
     let people = null;
 
     if (this.state.showPeople) {
