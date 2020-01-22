@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import Person from './Person/Person';
 import styled from 'styled-components';
-import './App.css';
+import classes from './App.module.css';
 
 const StyledButton = styled.button`
   background-color: ${ props => props.alt ? 'red' : 'green' };
@@ -48,12 +48,14 @@ class App extends Component {
   }
 
   render() {
+    console.log(classes);
     let people = null;
+    let BtnClass = '';
 
-    let classes = [];
+    let assignedClasses = [];
 
-    if (this.state.people.length <= 2) classes.push('red');
-    if (this.state.people.length <= 1) classes.push('bold')
+    if (this.state.people.length <= 2) assignedClasses.push(classes.red);
+    if (this.state.people.length <= 1) assignedClasses.push(classes.bold);
 
       if (this.state.showPeople) {
         people = (
@@ -68,18 +70,18 @@ class App extends Component {
           })}
           </>
         );
-
+        BtnClass = classes.Red;
         
       }
     return (      
-        <div className="App">
+        <div className={classes.App}>
           <h1>
             Hi, I am a react app
           </h1>
-          <p className={classes.join(' ')}>Is this really working?</p>
+          <p className={assignedClasses.join(' ')}>Is this really working?</p>
           {/* () => this.switchNameHandler('Mels') is less efficient then 'bind' approach */}
           <button
-          className="button"
+          className={BtnClass}
           onClick={() => this.togglePeople()}>Toggle people</button>
           {people}
         </div>
