@@ -12,7 +12,7 @@ const Cockpit = (props) => {
     if (props.people.length <= 1) assignedClasses.push(classes.bold);
     return (
         <div className={classes.Cockpit}>
-          <h1> Hi, I am a react app</h1>
+        <h1> { props.title } </h1>
           <p className={assignedClasses.join(' ')}>Is this really working?</p>
           <button
             className={btnClass}
