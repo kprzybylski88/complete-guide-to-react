@@ -1,20 +1,7 @@
 import React, {Component} from 'react';
-import Person from '../components/People/Person/Person';
-import styled from 'styled-components';
+import People from '../components/People/People';
+import Cockpit from '../components/Cockpit/Cockpit'
 import classes from './App.module.css';
-
-const StyledButton = styled.button`
-  background-color: ${ props => props.alt ? 'red' : 'green' };
-  color: white;
-  font: inherit;
-  border: 1px solid blue;
-  padding: 8px;
-  cursor: pointer;
-  &:hover {
-    background-color:  ${ props => props.alt ? 'salmon' : 'lightgreen' };
-    color: black;
-  }
-`;
 
 class App extends Component {
   state = {
@@ -43,46 +30,19 @@ class App extends Component {
   deletePersonHandler = (index) => {
     const people = [ ...this.state.people ];
     const a = people.splice(index, 1);
-    console.log(a);
     this.setState({people: people});
   }
 
   render() {
-    console.log(classes);
     let people = null;
-    let BtnClass = '';
 
-    let assignedClasses = [];
+    if (this.state.showPeople) {
+      people = <People people={this.state.people} clicked={this.deletePersonHandler} changed={this.nameChangedHandler} />;
+    }
 
-    if (this.state.people.length <= 2) assignedClasses.push(classes.red);
-    if (this.state.people.length <= 1) assignedClasses.push(classes.bold);
-
-      if (this.state.showPeople) {
-        people = (
-          <>
-          {this.state.people.map((p, i) => {
-          return <Person 
-            key={i} 
-            deletePerson={this.deletePersonHandler.bind(this, i)} 
-            name={p.name} 
-            age={p.age}
-            changeName={(event) => this.nameChangedHandler(event, i)}></Person>
-          })}
-          </>
-        );
-        BtnClass = classes.Red;
-        
-      }
     return (      
         <div className={classes.App}>
-          <h1>
-            Hi, I am a react app
-          </h1>
-          <p className={assignedClasses.join(' ')}>Is this really working?</p>
-          {/* () => this.switchNameHandler('Mels') is less efficient then 'bind' approach */}
-          <button
-          className={BtnClass}
-          onClick={() => this.togglePeople()}>Toggle people</button>
+          <Cockpit clickedBtn={this.togglePeople} showPeople={this.state.showPeople} people={this.state.people} />
           {people}
         </div>
     );
