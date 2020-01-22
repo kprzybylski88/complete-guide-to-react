@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import Person from './Person/Person';
+import Person from '../components/People/Person/Person';
 import styled from 'styled-components';
 import classes from './App.module.css';
 
