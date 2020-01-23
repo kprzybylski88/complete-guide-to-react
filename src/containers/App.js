@@ -15,6 +15,15 @@ class App extends Component {
     console.log('[App.js] componentDidMount');
   }
 
+  shouldComponentUpdate(nextProps, nextState) {
+    console.log('[App.js] shouldComponent Update', {...this.state},{...nextState});
+    return true;
+  }
+
+  componentDidUpdate() {
+    console.log('[App.js] componentDidUpdate');
+  }
+
   static getDerivedStateFromProps(props, state) {
     console.log('[App.js] getDerivedStatFromProps', props);
     return state;
@@ -26,7 +35,7 @@ class App extends Component {
       { name: 'Jane', age: 23 },
       { name: 'Niji', age: 30 },
     ],
-    showPeople: true,
+    showPeople: false,
   }
   togglePeople = () => {
     const doesShow = this.state.showPeople;
@@ -50,7 +59,7 @@ class App extends Component {
   }
 
   render() {
-    console.log('[App.js] render')
+    console.log('[App.js] rendering...')
     let people = null;
 
     if (this.state.showPeople) {

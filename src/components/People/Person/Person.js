@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Component } from 'react';
 import styled from 'styled-components';
 import classes from './Person.module.css';
 
@@ -15,14 +15,17 @@ text-align: center;
 }
 `;
 
-const person = (props) => {
-  return (
-    <div className={classes.Person}>
-      <p onClick={props.deletePerson} >I'm {props.name} and I am {props.age} years old!</p>
-      <p>{props.children}</p>
-      <input type="text" onChange={props.changeName} value={props.name}/>
-    </div>
-  )
+class Person extends Component  {
+  render() {
+    console.log('[Person.js] rendering...')
+    return (
+      <div className={classes.Person}>
+        <p onClick={this.props.deletePerson} >I'm {this.props.name} and I am {this.props.age} years old!</p>
+        <p>{this.props.children}</p>
+        <input type="text" onChange={this.props.changeName} value={this.props.name}/>
+      </div>
+    );
+  }
 }
 
-export default person;
+export default Person;
