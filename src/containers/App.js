@@ -40,6 +40,7 @@ class App extends Component {
     showPeople: false,
     showCockpit: true,
     keystrokeCounter: 0,
+    authenticated: false,
   }
   togglePeople = () => {
     const doesShow = this.state.showPeople;
@@ -72,15 +73,21 @@ class App extends Component {
     this.setState({people: people});
   }
 
+  loginHandler = () => {
+    this.setState({
+      authenticated: true
+    });
+  }
+
   render() {
     console.log('[App.js] rendering...')
     let people = null;
     let cockpit = null;
     if (this.state.showCockpit) {
-      cockpit = <Cockpit title={this.props.appTitle} clickedBtn={this.togglePeople} showPeople={this.state.showPeople} peopleLength={this.state.people.length} />;
+      cockpit = <Cockpit title={this.props.appTitle} login={this.loginHandler} clickedBtn={this.togglePeople} showPeople={this.state.showPeople} peopleLength={this.state.people.length} />;
     }
     if (this.state.showPeople) {
-      people = <People people={this.state.people} clicked={this.deletePersonHandler} changed={this.nameChangedHandler} />;
+      people = <People isAuthenticated={this.state.authenticated} people={this.state.people} clicked={this.deletePersonHandler} changed={this.nameChangedHandler} />;
     }
 
 

@@ -1,11 +1,14 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useRef } from 'react';
 import classes from './Cockpit.module.css';
 
 const Cockpit = (props) => {
 
+    const toggleButtonRef = useRef(null);
+
     useEffect(() => {
         console.log('[Cockpit.js] useEffect');
         const timer = setTimeout(() => console.log('Sending HTTP request....'), 1000);
+        toggleButtonRef.current.click();
         return () => {console.log('[Cockpit.js] cleanup'); clearTimeout(timer);}
     }, []);
     
@@ -27,9 +30,14 @@ const Cockpit = (props) => {
         <h1> { props.title } </h1>
           <p className={assignedClasses.join(' ')}>Is this really working?</p>
           <button
+            ref={toggleButtonRef}
             className={btnClass}
             onClick={props.clickedBtn}>
                  Toggle people
+          </button>
+          <button
+            onClick={props.login}>
+              Log in
           </button>
         </div>
     );
