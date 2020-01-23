@@ -4,6 +4,7 @@ import Cockpit from '../components/Cockpit/Cockpit'
 import classes from './App.module.css';
 import withClass from '../hoc/withClass';
 import Aux from '../hoc/Auxiliary';
+import AuthContext from '../context/auth-context';
 
 class App extends Component {
   
@@ -84,18 +85,32 @@ class App extends Component {
     let people = null;
     let cockpit = null;
     if (this.state.showCockpit) {
-      cockpit = <Cockpit title={this.props.appTitle} login={this.loginHandler} clickedBtn={this.togglePeople} showPeople={this.state.showPeople} peopleLength={this.state.people.length} />;
+      cockpit = <Cockpit 
+                  title={this.props.appTitle} 
+                  clickedBtn={this.togglePeople} 
+                  showPeople={this.state.showPeople} 
+                  peopleLength={this.state.people.length} />;
     }
     if (this.state.showPeople) {
-      people = <People isAuthenticated={this.state.authenticated} people={this.state.people} clicked={this.deletePersonHandler} changed={this.nameChangedHandler} />;
+      people = <People
+                people={this.state.people} 
+                clicked={this.deletePersonHandler} 
+                changed={this.nameChangedHandler} />;
     }
 
 
     return (
         <Aux>
           <button onClick={this.toggleCockpit}>Remove Cockpit {this.state.keystrokeCounter}</button>
-          {cockpit}
-          {people}
+          <AuthContext.Provider 
+            value={{
+              authenticated: this.state.authenticated,
+              login: this.loginHandler
+            }}
+            >
+            {cockpit}
+            {people}
+          </AuthContext.Provider>
         </Aux>
     );
   }

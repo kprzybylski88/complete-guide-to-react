@@ -31,13 +31,15 @@ class People extends PureComponent {
     render() {
         console.log('[People.js] rendering...');
         return this.props.people.map((person, index) => {
-            return <Person 
-            key={index}
-            isAuthenticated={this.props.isAuthenticated}
-            deletePerson={() => this.props.clicked(index)} 
-            name={person.name} 
-            age={person.age}
-            changeName={(event) => this.props.changed(event, index)}></Person>
+            return (
+            <Person 
+                key={index}
+                deletePerson={() => this.props.clicked(index)} 
+                name={person.name} 
+                age={person.age}
+                changeName={(event) => this.props.changed(event, index)} 
+            />
+            );
         });
     }
 }
