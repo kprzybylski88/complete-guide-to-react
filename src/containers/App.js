@@ -2,6 +2,8 @@ import React, {Component} from 'react';
 import People from '../components/People/People';
 import Cockpit from '../components/Cockpit/Cockpit'
 import classes from './App.module.css';
+import withClass from '../hoc/withClass';
+import Aux from '../hoc/Auxiliary';
 
 class App extends Component {
   
@@ -36,12 +38,20 @@ class App extends Component {
       { name: 'Niji', age: 30 },
     ],
     showPeople: false,
+    showCockpit: true,
   }
   togglePeople = () => {
     const doesShow = this.state.showPeople;
     this.setState({
       showPeople: !doesShow
-    })
+    });
+  }
+
+  toggleCockpit = () => {
+    const doesShow = this.state.showCockpit;
+    this.setState({
+      showCockpit: !doesShow,
+    });
   }
 
   nameChangedHandler = (event, index) => {
@@ -61,18 +71,23 @@ class App extends Component {
   render() {
     console.log('[App.js] rendering...')
     let people = null;
-
+    let cockpit = null;
+    if (this.state.showCockpit) {
+      cockpit = <Cockpit title={this.props.appTitle} clickedBtn={this.togglePeople} showPeople={this.state.showPeople} peopleLength={this.state.people.length} />;
+    }
     if (this.state.showPeople) {
       people = <People people={this.state.people} clicked={this.deletePersonHandler} changed={this.nameChangedHandler} />;
     }
 
-    return (      
-        <div className={classes.App}>
-          <Cockpit title={this.props.appTitle} clickedBtn={this.togglePeople} showPeople={this.state.showPeople} people={this.state.people} />
+
+    return (
+        <Aux>
+          <button onClick={this.toggleCockpit}>Remove Cockpit</button>
+          {cockpit}
           {people}
-        </div>
+        </Aux>
     );
   }
 }
 
-export default App;
+export default withClass(App, classes.App);
