@@ -39,6 +39,7 @@ class App extends Component {
     ],
     showPeople: false,
     showCockpit: true,
+    keystrokeCounter: 0,
   }
   togglePeople = () => {
     const doesShow = this.state.showPeople;
@@ -57,14 +58,17 @@ class App extends Component {
   nameChangedHandler = (event, index) => {
     const people = [...this.state.people];
     people[index] =  {...people[index], name: event.target.value};
-    this.setState({
-      people: people
+    this.setState((prevState, props) => {
+      return {
+        people: people,
+        keystrokeCounter: ++prevState.keystrokeCounter
+      }
     });
   }
 
   deletePersonHandler = (index) => {
     const people = [ ...this.state.people ];
-    const a = people.splice(index, 1);
+    people.splice(index, 1);
     this.setState({people: people});
   }
 
@@ -82,7 +86,7 @@ class App extends Component {
 
     return (
         <Aux>
-          <button onClick={this.toggleCockpit}>Remove Cockpit</button>
+          <button onClick={this.toggleCockpit}>Remove Cockpit {this.state.keystrokeCounter}</button>
           {cockpit}
           {people}
         </Aux>
